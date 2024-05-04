@@ -8,24 +8,24 @@ class MaxHeap
 {
 private:
 	std::vector<T> heap_;
-	int size_;
+	size_t size_;
 
 	void heapifyUp(int index);
 	void heapifyDown(int index);
 
 public:
-	MaxHeap(std::vector<T>, int);
+	MaxHeap(std::vector<T>, size_t);
 	MaxHeap();
 	~MaxHeap();
 
-	int getSize();
-	void insert(int value);
+	size_t getSize();
+	void insert(T value);
 	void display();
 };
 
 //Initialize max heap with data
 template <typename T>
-MaxHeap<T>::MaxHeap(std::vector<T> heap, int size) : heap_(heap), size_(size)
+MaxHeap<T>::MaxHeap(std::vector<T> heap, size_t size) : heap_(heap), size_(size)
 {
 	// Start index is the last non-leaf index
 	int startIndex = (size_ / 2) - 1;
@@ -70,7 +70,7 @@ void MaxHeap<T>::heapifyDown(int index)
 {
 	//If there is only one node, the heap property is obviously satisfied
 	if (size_ == 1)
-		//return;
+		return;
 
 	int leftChildIndex = 2 * index + 1;
 	int rightChildIndex = 2 * index + 2;
@@ -89,5 +89,26 @@ void MaxHeap<T>::heapifyDown(int index)
 		heapifyDown(largestElementIndex);
 	}
 }
+
+
+template <typename T>
+size_t MaxHeap<T>::getSize() { return size_; }
+
+//Add element at any free position and move it up if necessary
+template <typename T>
+void MaxHeap<T>::insert(T value)
+{
+	heap_.push_back(value);
+	heapifyUp(size_ - 1);
+}
+
+
+template <typename T>
+void MaxHeap<T>::display()
+{
+	//Under construction
+}
+
+
 
 #endif
