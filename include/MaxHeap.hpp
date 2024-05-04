@@ -109,6 +109,4 @@ void MaxHeap<T>::display()
 	//Under construction
 }
 
-
-
 #endif
