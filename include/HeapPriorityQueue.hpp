@@ -18,6 +18,7 @@ private:
 public:
 	HeapPriorityQueue();
 	HeapPriorityQueue(std::vector<Node<T>>, size_t);
+	HeapPriorityQueue(const HeapPriorityQueue<T>& copy);
 	~HeapPriorityQueue();
 
 	void insert(T value, int priority) override;
@@ -55,6 +56,14 @@ HeapPriorityQueue<T>::HeapPriorityQueue(std::vector<Node<T>> heap, size_t size) 
 	{
 		heapifyDown(i);
 	}
+}
+
+//Copy constructor
+template <typename T>
+HeapPriorityQueue<T>::HeapPriorityQueue(const HeapPriorityQueue<T>& copy)
+{
+	heap_ = copy.heap_;
+	size_ = copy.size_;
 }
 
 template <typename T>

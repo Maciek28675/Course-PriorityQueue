@@ -39,7 +39,7 @@ void measurePerformance(int repetitions, int dataSetSize)
 	}
 
 	HeapPriorityQueue<int> pq(nodes, dataSetSize);
-	HeapPriorityQueue<int> pqCopy = pq;
+	HeapPriorityQueue<int> pqCopy(pq);
 
 	double averageTime = 0.0;
 	double sum = 0.0;
