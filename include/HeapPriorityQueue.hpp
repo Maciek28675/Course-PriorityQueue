@@ -3,6 +3,7 @@
 
 #include "Node.hpp"
 #include "Queue.hpp"
+#include "fibonacciheapnode.hpp"
 
 template <typename T>
 class HeapPriorityQueue : public Queue<T>	
@@ -19,12 +20,13 @@ public:
 	HeapPriorityQueue(std::vector<Node<T>>, size_t);
 	~HeapPriorityQueue();
 
-	void insert(T value, int priority);
-	Node<T> exctractMax();
-	Node<T> findMax();
-	void modifyKey(T value, int priority);
-	size_t getSize();
-	void display();
+	void insert(T value, int priority) override;
+	Node<T> exctractMax() override;
+	Node<T> findMax() override;
+	void modifyKey(T value, int priority) override;
+	void modifyKey(FibonacciHeapNode<T>* node, T newKey) override {}
+	size_t getSize() override;
+	void display() override;
 
 	T getElement(int index);
 	int getPriority(int index);

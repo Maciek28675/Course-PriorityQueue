@@ -5,6 +5,7 @@
 #include <ctime>
 #include <vector>
 #include "HeapPriorityQueue.hpp"
+#include "fibonacciheapnode.hpp"
 #include "Timer.hpp"
 #include "Node.hpp"
 

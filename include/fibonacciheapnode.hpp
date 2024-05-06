@@ -1,10 +1,12 @@
-#pragma once
+#ifndef FIBONACCI_HEAP_NODE_HPP
+#define FIBONACCI_HEAP_NODE_HPP
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <cmath>
 #include "node.hpp"
-
+#include "Queue.hpp"
 
 
 template <typename T>
@@ -25,23 +27,24 @@ public:
 };
 
 template <typename T>
-class FibonacciHeap
+class FibonacciHeap : public Queue<T>
 {
-	public:
-		FibonacciHeap() : minNode(nullptr), numOfNodes(0) {});
-		~FibonacciHeap();
+public:
+	FibonacciHeap() : minNode(nullptr), numOfNodes(0) {}
+	~FibonacciHeap();
 	
-	void insert(T key, int priority);
-	Node<T> extract_max();
-	Node<T> find_max();
+	void insert(T key, int priority) override;
+	Node<T> extractMax() override;
+	Node<T> findMax() override;
 	Node<T> peek();
-	void modify_key(FibonacciHeapNode<T>* node, T newKey);
-	void return_size();
-	void display();
+	void modifyKey(FibonacciHeapNode<T>* node, T newKey) override;
+	void modifyKey(T value, int priority) override {}
+	size_t getSize() override;
+	void display() override;
 
 private:
 	FibonacciHeapNode<T>* minNode;
-	int numOfNodes;
+	size_t numOfNodes;
 
 	void consolidate();
 	void link(FibonacciHeapNode<T>* node1, FibonacciHeapNode<T>* node2);
@@ -87,7 +90,7 @@ void FibonacciHeap<T>::insert(T key, int priority)
 }
 
 template <typename T>
-Node<T> FibonacciHeap<T>::extract_max()
+Node<T> FibonacciHeap<T>::extractMax()
 {
 	if (minNode == nullptr)
 	{
@@ -130,7 +133,7 @@ Node<T> FibonacciHeap<T>::extract_max()
 }
 
 template <typename T>
-Node<T> FibonacciHeap<T>::find_max()
+Node<T> FibonacciHeap<T>::findMax()
 {
 	return minNode;
 }
@@ -142,7 +145,7 @@ Node<T> FibonacciHeap<T>::peek()
 }
 
 template <typename T>
-void FibonacciHeap<T>::modify_key(FibonacciHeapNode<T>* node, T newKey)
+void FibonacciHeap<T>::modifyKey(FibonacciHeapNode<T>* node, T newKey)
 {
 	if (newKey < node->key)
 	{
@@ -165,7 +168,7 @@ void FibonacciHeap<T>::modify_key(FibonacciHeapNode<T>* node, T newKey)
 }
 
 template <typename T>
-void FibonacciHeap<T>::return_size()
+size_t FibonacciHeap<T>::getSize()
 {
 	return numOfNodes;
 }
@@ -293,5 +296,4 @@ void FibonacciHeap<T>::cut(FibonacciHeapNode<T>* node, FibonacciHeapNode<T>* par
 	node->mark = false;
 }
 
-
-
+#endif
