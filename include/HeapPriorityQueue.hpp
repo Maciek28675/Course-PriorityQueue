@@ -2,9 +2,10 @@
 #define HEAP_PRIORITY_QUEUE_HPP
 
 #include "Node.hpp"
+#include "Queue.hpp"
 
 template <typename T>
-class HeapPriorityQueue
+class HeapPriorityQueue : public Queue<T>	
 {
 private:
 	std::vector<Node<T>> heap_;
@@ -24,8 +25,13 @@ public:
 	void modifyKey(T value, int priority);
 	size_t getSize();
 	void display();
+
+	T getElement(int index);
+	int getPriority(int index);
+	void setElement(int index, T value);
 };
 
+//Create an empty queue
 template <typename T>
 HeapPriorityQueue<T>::HeapPriorityQueue()
 {
@@ -36,6 +42,7 @@ HeapPriorityQueue<T>::HeapPriorityQueue()
 	std::cout << "Empty priority queue has been created!\n";
 }
 
+//Initialize queue with data
 template <typename T>
 HeapPriorityQueue<T>::HeapPriorityQueue(std::vector<Node<T>> heap, size_t size) : heap_(heap), size_(size)
 {
@@ -49,11 +56,9 @@ HeapPriorityQueue<T>::HeapPriorityQueue(std::vector<Node<T>> heap, size_t size) 
 }
 
 template <typename T>
-HeapPriorityQueue<T>::~HeapPriorityQueue()
-{
-	std::cout << "priority queue has been deleted!\n";
-}
+HeapPriorityQueue<T>::~HeapPriorityQueue() {}
 
+//Ensure that heap property is satisfied while moving up
 template <typename T>
 void HeapPriorityQueue<T>::heapifyUp(int index)
 {
@@ -67,6 +72,7 @@ void HeapPriorityQueue<T>::heapifyUp(int index)
 	}
 }
 
+//Ensure that heap property is satisfied while moving down
 template <typename T>
 void HeapPriorityQueue<T>::heapifyDown(int index)
 {
@@ -118,12 +124,12 @@ Node<T> HeapPriorityQueue<T>::findMax()
 	return heap_[0];
 }
 
+//Increase or decrase property of an element at index
 template <typename T>
-void HeapPriorityQueue<T>::modifyKey(T value, int priority)
+void HeapPriorityQueue<T>::modifyKey(T value , int priority)
 {
 	int index = 0;
 
-	//Traverse the heap to find specified element
 	for (int i = 0; i < size_; i++)
 	{
 		if (heap_[i].value == value)
@@ -140,14 +146,14 @@ void HeapPriorityQueue<T>::modifyKey(T value, int priority)
 	//Incerease key
 	if (priority > heap_[index].priority)
 	{
-		heap_[index].priority++;
+		heap_[index].priority = priority;
 		heapifyUp(index);
 	}
 
 	//Decrease key
 	else if (priority < heap_[index].priority)
 	{
-		heap_[index].priority--;
+		heap_[index].priority = priority;
 		heapifyDown(index);
 	}
 }
@@ -164,4 +170,21 @@ void HeapPriorityQueue<T>::display()
 	//in progress
 }
 
+template <typename T>
+T HeapPriorityQueue<T>::getElement(int index)
+{
+	return heap_[index].value;
+}
+
+template <typename T>
+int HeapPriorityQueue<T>::getPriority(int index)
+{
+	return heap_[index].priority;
+}
+
+template <typename T>
+void HeapPriorityQueue<T>::setElement(int index, T value)
+{
+	heap_[index].value = value;
+}
 #endif
