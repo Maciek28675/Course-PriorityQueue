@@ -190,7 +190,7 @@ void HeapPriorityQueue<T>::display()
 
     for (int i = 0; i < size_; ++i)
     {
-        std::cout << heap_[i].key << " ";
+        std::cout << heap_[i].value << " ";
 
         if (++currentSize == levelSize)
         {
