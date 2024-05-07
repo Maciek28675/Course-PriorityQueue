@@ -5,6 +5,8 @@
 
 int main()
 {
+	measurePerformance(10000, 600000);
+	/*
 	measurePerformance(10000, 10000);
 	measurePerformance(10000, 20000);
 	measurePerformance(10000, 30000);
@@ -25,10 +27,26 @@ int main()
 	measurePerformance(10000, 300000);
 	measurePerformance(10000, 400000);
 	measurePerformance(10000, 500000);
+	*/
+
+	/*
+	std::vector<Node<int>> data = {
+		{4, 4},
+		{10, 10},
+		{3, 3},
+		{5, 5},
+		{1, 1},
+	};
+
+	HeapPriorityQueue<int> pq(data, data.size());
+
+	pq.display();
+	*/
 
 	// #TODO:
 	// - Add method to display heap graphicly
-	// - Add '<<' operator overload for Node struct
+	// - Add a menu
+	// - Add exception handling
 
 	return 0;
 }

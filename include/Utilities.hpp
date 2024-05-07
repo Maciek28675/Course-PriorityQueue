@@ -49,8 +49,8 @@ void measurePerformance(int repetitions, int dataSetSize)
 	//int elementToInsert = pq.getElement(0);
 
 	int valueToFind = -1;
-	int priorityToSet = pq.getPriority(dataSetSize - 1) - 1;
-	pq.setElement(0, valueToFind);
+	int priorityToSet = pq.getPriority(0) + 1;
+	pq.setElement(dataSetSize - 1, valueToFind);
 
 	// measure time of operation
 	for (int i = 0; i < repetitions; i++)

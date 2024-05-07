@@ -178,7 +178,7 @@ size_t HeapPriorityQueue<T>::getSize()
 template <typename T>
 void HeapPriorityQueue<T>::display()
 {
-	//in progress
+	// In progress
 }
 
 template <typename T>
