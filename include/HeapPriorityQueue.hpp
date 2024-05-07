@@ -178,7 +178,30 @@ size_t HeapPriorityQueue<T>::getSize()
 template <typename T>
 void HeapPriorityQueue<T>::display()
 {
-	// In progress
+    if (size_ == 0)
+    {
+        std::cout << "Heap is empty" << std::endl;
+        return;
+    }
+
+    int level = 0;
+    int levelSize = 1;
+    int currentSize = 0;
+
+    for (int i = 0; i < size_; ++i)
+    {
+        std::cout << heap_[i].key << " ";
+
+        if (++currentSize == levelSize)
+        {
+            std::cout << std::endl;
+            levelSize *= 2;
+            currentSize = 0;
+            ++level;
+        }
+    }
+
+    std::cout << std::endl;
 }
 
 template <typename T>
