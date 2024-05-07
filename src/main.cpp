@@ -5,8 +5,6 @@
 
 int main()
 {
-	measurePerformance(10000, 600000);
-	/*
 	measurePerformance(10000, 10000);
 	measurePerformance(10000, 20000);
 	measurePerformance(10000, 30000);
@@ -27,7 +25,7 @@ int main()
 	measurePerformance(10000, 300000);
 	measurePerformance(10000, 400000);
 	measurePerformance(10000, 500000);
-	*/
+	
 
 	/*
 	std::vector<Node<int>> data = {

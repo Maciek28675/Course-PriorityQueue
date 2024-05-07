@@ -5,7 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <cmath>
-#include "node.hpp"
+#include "Node.hpp"
 #include "Queue.hpp"
 
 
@@ -13,9 +13,6 @@ template <typename T>
 class FibonacciHeapNode
 {
 public:
-	FibonacciHeapNode(T key, int prio) : value(value), priority(priority), parent(nullptr), child(nullptr), left(this), right(this), degree(0), mark(false) {}
-	~FibonacciHeapNode();
-
 	T value;
 	FibonacciHeapNode<T>* parent;
 	FibonacciHeapNode<T>* child;
@@ -24,6 +21,9 @@ public:
 	int degree;
 	int priority;
 	bool mark;
+
+	FibonacciHeapNode(T key, int prio) : value(key), priority(prio), parent(nullptr), child(nullptr), left(this), right(this), degree(0), mark(false) {}
+	~FibonacciHeapNode() {}
 };
 
 template <typename T>
@@ -43,6 +43,10 @@ public:
 	size_t getSize() override;
 	void display() override;
 
+	T FibonacciHeap<T>::getElement(int index);
+	int FibonacciHeap<T>::getPriority(int index);
+
+
 private:
 	FibonacciHeapNode<T>* minNode;
 	size_t numOfNodes;
@@ -58,13 +62,23 @@ FibonacciHeap<T>::~FibonacciHeap()
 	if (minNode != nullptr)
 	{
 		FibonacciHeapNode<T>* current = minNode;
+
+		/*
 		do
 		{
-		FibonacciHeapNode<T>* next = current->right;
-		delete current;
-		current = next;
-		} 
-	while (current != minNode);
+			FibonacciHeapNode<T>* next = current->right;
+			delete current;
+			current = next;
+
+		}while (current != minNode);
+		*/
+
+		while (current != minNode)
+		{
+			FibonacciHeapNode<T>* next = current->right;
+			delete current;
+			current = next;
+		}
 	}
 }
 
@@ -74,7 +88,7 @@ FibonacciHeap<T>::FibonacciHeap(std::vector<Node<T>> nodes, size_t size) : numOf
 	minNode = nullptr;
 	for (size_t i = 0; i < size; i++)
 	{
-		FibonacciHeapNode<T>* newNode = new FibonacciHeapNode<T>(nodes[i].key, nodes[i].priority);
+		FibonacciHeapNode<T>* newNode = new FibonacciHeapNode<T>(nodes[i].value, nodes[i].priority);
 		
 		if (minNode == nullptr)
 		{
@@ -244,36 +258,53 @@ void FibonacciHeap<T>::consolidate()
 	int maxDegree = static_cast<int>(floor(log(getSize()) / log(2))) + 1;
 	FibonacciHeapNode<T>* start = minNode;
 	FibonacciHeapNode<T>* current = minNode;
+
+	std::vector<FibonacciHeapNode<T>*> arr;
+
 	do
 	{
 		FibonacciHeapNode<T>* next = current->right;
 		int degree = current->degree;
+
 		while (degree >= maxDegree)
 		{
 			maxDegree *= 2;
 		}
-		FibonacciHeapNode<T>* arr[maxDegree];
+
+		arr.assign(maxDegree, nullptr);
+		//FibonacciHeapNode<T>* arr[maxDegree] {};
+
+		/*
 		for (int i = 0; i < maxDegree; i++)
 		{
 			arr[i] = nullptr;
 		}
+		*/
+
 		FibonacciHeapNode<T>* x = current;
+
 		while (arr[x->degree] != nullptr)
 		{
 			FibonacciHeapNode<T>* y = arr[x->degree];
+
 			if (x->priority < y->priority)
 			{
 				FibonacciHeapNode<T>* temp = x;
 				x = y;
 				y = temp;
 			}
+
 			link(y, x);
 			arr[x->degree - 1] = nullptr;
 		}
+
 		arr[x->degree] = x;
 		current = next;
+
 	} while (current != start);
+
 	minNode = nullptr;
+
 	for (int i = 0; i < maxDegree; i++)
 	{
 		if (arr[i] != nullptr)
@@ -290,6 +321,7 @@ void FibonacciHeap<T>::consolidate()
 				arr[i]->left = minNode->left;
 				minNode->left = arr[i];
 				arr[i]->right = minNode;
+
 				if (arr[i]->priority > minNode->priority)
 				{
 					minNode = arr[i];
