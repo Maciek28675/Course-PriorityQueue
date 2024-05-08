@@ -42,16 +42,16 @@ averageTime = sum / repetitions;
 ```
 ## Example result of performance measurement
 
-![measurement example 1]()
+![measurement example 1](https://github.com/Maciek28675/PriorityQueue/blob/master/Images/fig1.bmp)
 
 ### Example chart
 
-![chart 1](chart1.png)
+![chart 1](https://github.com/Maciek28675/PriorityQueue/blob/master/Images/fig4.bmp)
 
 ## Menu
 The program features user friendly menu. The user can choose a data structure, it's data type and an operation to perform.  
 Here is how it looks like:  
 
-![menu example 1](menuExample1.bmp)
+![menu example 1](https://github.com/Maciek28675/PriorityQueue/blob/master/Images/fig3.bmp)
 
-![menu example 2](menuExample2.bmp)
+![menu example 2](https://github.com/Maciek28675/PriorityQueue/blob/master/Images/fig2.bmp)
