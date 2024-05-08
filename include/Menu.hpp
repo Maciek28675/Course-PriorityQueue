@@ -264,6 +264,7 @@ void OperationMenu<T>::run()
 {
 	T value {};
 	int priority = 0;
+	size_t size = 0;
 
 	while (userChoice != exitOption)
 	{
@@ -288,17 +289,31 @@ void OperationMenu<T>::run()
 			{
 				Node<T> node = pq->exctractMax();
 
+				std::cout << "max node has been removed from queue\n";
 				std::cout << "max value: " << node.value << '\n';
 				std::cout << "max priority: " << node.priority << '\n';
+
+				break;
 			}
 
 			case 3:
 			{
+				Node <T> node = pq->findMax();
+
+				std::cout << "max value: " << node.value << '\n';
+				std::cout << "max priority: " << node.priority << '\n';
+
 				break;
 			}
 
 			case 4:
 			{
+				std::cout << "Enter value that you want to change: ";
+				std::cin >> value;
+				std::cout << "Enter new priority: ";
+				std::cin >> priority;
+
+				pq->modifyKey(value, priority);
 				break;
 			}
 
@@ -310,6 +325,10 @@ void OperationMenu<T>::run()
 
 			case 6:
 			{
+				size = pq->getSize();
+
+				std::cout << "Size of queue is: " << size << '\n';
+
 				break;
 			}
 

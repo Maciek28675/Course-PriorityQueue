@@ -6,6 +6,9 @@
 
 int main()
 {
+	DataTypeMenu m1;
+	m1.run();
+
 	/*
 	measurePerformance(10000, 10000);
 	measurePerformance(10000, 20000);
@@ -28,28 +31,7 @@ int main()
 	measurePerformance(10000, 400000);
 	measurePerformance(10000, 500000);
 	*/
-	/////////////////////////// TESTS ///////////////////////////////
 
-	
-	DataTypeMenu m1;
-	m1.run();
-	
-	/*
-	std::vector<int> priorities = generateIntDataSet(100, 1, 0, 500);
-	std::vector<int> elements = generateIntDataSet(100, 2);
-		std::vector<Node<int>> nodes;
-
-	for (int i = 0; i < 100; i++)
-	{
-		nodes.push_back({ elements[i], priorities[i] });
-	}
-
-	HeapPriorityQueue<int> pq(nodes, nodes.size());
-
-	pq.display();
-	*/
-
-	// TODO: Add a menu
 	// TODO: Add exception handling
 	// TODO: Fix extract max in fibonnaci heap
 	// TODO: Add a README.md
