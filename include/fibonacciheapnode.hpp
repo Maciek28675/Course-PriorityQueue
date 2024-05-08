@@ -8,7 +8,7 @@
 #include "Node.hpp"
 #include "Queue.hpp"
 
-
+//representing a node in the Fibonacci heap
 template <typename T>
 class FibonacciHeapNode
 {
@@ -26,6 +26,7 @@ public:
 	~FibonacciHeapNode() {}
 };
 
+//representing a Fibonacci heap
 template <typename T>
 class FibonacciHeap : public Queue<T>
 {
@@ -44,9 +45,9 @@ public:
 	size_t getSize() override;
 	void display() override;
 
-	T FibonacciHeap<T>::getElement(int index);
-	int FibonacciHeap<T>::getPriority(int index);
-	void FibonacciHeap<T>::setElement(int index, T value);
+	T getElement(int index);
+	int getPriority(int index);
+	void setElement(int index, T value);
 
 
 private:
@@ -58,6 +59,7 @@ private:
 	void cut(FibonacciHeapNode<T>* node, FibonacciHeapNode<T>* parent);
 };
 
+//destructor
 template <typename T>
 FibonacciHeap<T>::~FibonacciHeap()
 {
@@ -92,6 +94,7 @@ FibonacciHeap<T>::FibonacciHeap(const FibonacciHeap<T>& copy)
 	numOfNodes = copy.numOfNodes;
 }
 
+//constructor
 template <typename T>
 FibonacciHeap<T>::FibonacciHeap(std::vector<Node<T>> nodes, size_t size) : numOfNodes(size)
 {
@@ -118,20 +121,25 @@ FibonacciHeap<T>::FibonacciHeap(std::vector<Node<T>> nodes, size_t size) : numOf
 	}
 }
 
+//Inserts a new node into the Fibonacci heap
 template <typename T>
 void FibonacciHeap<T>::insert(T value, int priority)
 {
+	//create a new node
 	FibonacciHeapNode<T>* newNode = new FibonacciHeapNode<T>(value, priority);
+	//if the heap is empty
 	if (minNode == nullptr)
 	{
 		minNode = newNode;
 	}
 	else
 	{
+		//insert the new node into the list of roots
 		minNode->left->right = newNode;
 		newNode->left = minNode->left;
 		minNode->left = newNode;
 		newNode->right = minNode;
+		//update the min node if necessary
 		if (newNode->priority > minNode->priority)
 		{
 			minNode = newNode;
@@ -140,18 +148,20 @@ void FibonacciHeap<T>::insert(T value, int priority)
 	numOfNodes++;
 }
 
+////Removes and returns the node with the maximum priority
 template <typename T>
 Node<T> FibonacciHeap<T>::exctractMax()
 {
 	if (minNode == nullptr)
 	{
-		return Node<T>();
+		return Node<T>();	//returns an empty node
 	}
-
+	//creating a copy of the max node
 	FibonacciHeapNode<T>* maxNode = minNode;
 
 	if (maxNode->child != nullptr)
 	{
+		//if the max node has children, add them to the list of roots
 		FibonacciHeapNode<T>* start = maxNode->child;
 		FibonacciHeapNode<T>* current = maxNode->child;
 
@@ -159,11 +169,14 @@ Node<T> FibonacciHeap<T>::exctractMax()
 		do
 		{
 			FibonacciHeapNode<T>* next = current->right;
+
 			current->parent = nullptr;
 			current->right = minNode->right;
 			current->left = minNode;
+
 			minNode->right->left = current;
 			minNode->right = current;
+
 			if (current->priority > minNode->priority)
 			{
 				minNode = current;
@@ -176,14 +189,16 @@ Node<T> FibonacciHeap<T>::exctractMax()
 		while (current != start)
 		{
 			FibonacciHeapNode<T>* next = current->right;
-
+			//disconnect the current node from its parent
 			current->parent = nullptr;
 			current->right = minNode->right;
 			current->left = minNode;
 
+			//insert the current node into the list of roots
 			minNode->right->left = current;
 			minNode->right = current;
 
+			//update the min node if necessary
 			if (current->priority > minNode->priority)
 			{
 				minNode = current;
@@ -192,12 +207,13 @@ Node<T> FibonacciHeap<T>::exctractMax()
 		}
 	}
 
-
+	//remove the max node from the list of roots
 	maxNode->left->right = maxNode->right;
 	maxNode->right->left = maxNode->left;
 
 	Node<T> max;
 
+	//copy the value and priority of the max node
 	max.value = maxNode->value;
 	max.priority = maxNode->priority;
 
@@ -207,6 +223,7 @@ Node<T> FibonacciHeap<T>::exctractMax()
 	}
 	else
 	{
+		//set the min node to the right of the max node
 		minNode = maxNode->right;
 		consolidate();
 	}
@@ -218,6 +235,7 @@ Node<T> FibonacciHeap<T>::exctractMax()
 	return max;
 }
 
+//Returns the node with the maximum priority
 template <typename T>
 Node<T> FibonacciHeap<T>::findMax()
 {
@@ -254,9 +272,11 @@ Node<T> FibonacciHeap<T>::findMax()
 	return max;
 }
 
+//modyfy the key of a node
 template <typename T>
 void FibonacciHeap<T>::modifyKey(FibonacciHeapNode<T>* node, T newKey)
 {
+	//if the new key is greater than the current key
 	if (newKey < node->value)
 	{
 		node->value = newKey;
@@ -270,6 +290,7 @@ void FibonacciHeap<T>::modifyKey(FibonacciHeapNode<T>* node, T newKey)
 				parent = parent->parent;
 			}
 		}
+		//update the min node if necessary
 		if (node->priority > minNode->priority)
 		{
 			minNode = node;
@@ -277,12 +298,14 @@ void FibonacciHeap<T>::modifyKey(FibonacciHeapNode<T>* node, T newKey)
 	}
 }
 
+//return the size of fibonacci heap
 template <typename T>
 size_t FibonacciHeap<T>::getSize()
 {
 	return numOfNodes;
 }
 
+//displaying fibonacci heap
 template <typename T>
 void FibonacciHeap<T>::display()
 {
@@ -300,13 +323,17 @@ void FibonacciHeap<T>::display()
 	std::cout << std::endl;
 }
 
+//consolidate the heap
 template <typename T>
 void FibonacciHeap<T>::consolidate()
 {
+	
+	//calculating the maximum degree of a node in the heap
 	int maxDegree = static_cast<int>(floor(log(getSize()) / log(2))) + 1;
 	FibonacciHeapNode<T>* start = minNode;
 	FibonacciHeapNode<T>* current = minNode;
 
+	//vector to store the nodes with the same degree
 	std::vector<FibonacciHeapNode<T>*> arr;
 
 	do
@@ -314,6 +341,7 @@ void FibonacciHeap<T>::consolidate()
 		FibonacciHeapNode<T>* next = current->right;
 		int degree = current->degree;
 
+		//if the degree of the current node is greater than the maximum degree
 		while (degree >= maxDegree)
 		{
 			maxDegree *= 2;
@@ -332,6 +360,7 @@ void FibonacciHeap<T>::consolidate()
 
 		FibonacciHeapNode<T>* x = current;
 
+		//if there is another node with the same degree as the current node
 		while (arr[x->degree] != nullptr)
 		{
 			FibonacciHeapNode<T>* y = arr[x->degree];
@@ -354,6 +383,7 @@ void FibonacciHeap<T>::consolidate()
 
 	minNode = nullptr;
 
+	//insert the nodes with the same degree into the list of roots
 	for (int i = 0; i < maxDegree; i++)
 	{
 		if (arr[i] != nullptr)
@@ -380,12 +410,15 @@ void FibonacciHeap<T>::consolidate()
 	}
 }
 
+//link two nodes
 template <typename T>
 void FibonacciHeap<T>::link(FibonacciHeapNode<T>* node1, FibonacciHeapNode<T>* node2)
 {
+	//remove node1 from the list of roots
 	node1->left->right = node1->right;
 	node1->right->left = node1->left;
 	node1->parent = node2;
+	//if node2 has no children
 	if (node2->child == nullptr)
 	{
 		node2->child = node1;
@@ -399,24 +432,31 @@ void FibonacciHeap<T>::link(FibonacciHeapNode<T>* node1, FibonacciHeapNode<T>* n
 		node2->child->left->right = node1;
 		node2->child->left = node1;
 	}
+	//updating degree and setting the mark of node1 to false
 	node2->degree++;
 	node1->mark = false;
 }
 
+//cut the node from its parents
 template <typename T>
 void FibonacciHeap<T>::cut(FibonacciHeapNode<T>* node, FibonacciHeapNode<T>* parent)
 {
+	//remove the node from the list of children of its parent	
 	node->left->right = node->right;
 	node->right->left = node->left;
+	//decrease the degree of the parent
 	parent->degree--;
+	//if the node is the child of its parent
 	if (parent->child == node)
 	{
 		parent->child = node->right;
 	}
+	//if the parent has no children
 	if (parent->degree == 0)
 	{
 		parent->child = nullptr;
 	}
+	//insert the node into the list of roots
 	node->left = minNode;
 	node->right = minNode->right;
 	minNode->right->left = node;
