@@ -40,7 +40,7 @@ for (int i = 0; i < repetitions; i++)
 
 averageTime = sum / repetitions;
 ```
-## Example result of performance measurement
+### Example result of performance measurement
 
 ![measurement example 1](https://github.com/Maciek28675/PriorityQueue/blob/master/Images/fig1.bmp)
 
