@@ -115,6 +115,7 @@ void HeapPriorityQueue<T>::insert(T value, int priority)
 {
 	heap_.push_back({ value, priority });
 	heapifyUp(size_ - 1);
+	size_++;
 }
 
 //Get element with highest priority and delete it
@@ -175,6 +176,7 @@ size_t HeapPriorityQueue<T>::getSize()
 	return size_;
 }
 
+//Display queue in right order (grouped by levels)
 template <typename T>
 void HeapPriorityQueue<T>::display()
 {

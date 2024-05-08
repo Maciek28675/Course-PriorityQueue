@@ -32,6 +32,7 @@ class FibonacciHeap : public Queue<T>
 public:
 	FibonacciHeap() : minNode(nullptr), numOfNodes(0) {}
 	FibonacciHeap(std::vector<Node<T>>, size_t);
+	FibonacciHeap(const FibonacciHeap<T>& copy);
 	~FibonacciHeap();
 	
 	void insert(T key, int priority) override;
@@ -45,6 +46,7 @@ public:
 
 	T FibonacciHeap<T>::getElement(int index);
 	int FibonacciHeap<T>::getPriority(int index);
+	void FibonacciHeap<T>::setElement(int index, T value);
 
 
 private:
@@ -80,6 +82,14 @@ FibonacciHeap<T>::~FibonacciHeap()
 			current = next;
 		}
 	}
+}
+
+//Copy constructor
+template <typename T>
+FibonacciHeap<T>::FibonacciHeap(const FibonacciHeap<T>& copy)
+{
+	minNode = copy.minNode;
+	numOfNodes = copy.numOfNodes;
 }
 
 template <typename T>
@@ -137,11 +147,15 @@ Node<T> FibonacciHeap<T>::exctractMax()
 	{
 		return Node<T>();
 	}
+
 	FibonacciHeapNode<T>* maxNode = minNode;
+
 	if (maxNode->child != nullptr)
 	{
 		FibonacciHeapNode<T>* start = maxNode->child;
 		FibonacciHeapNode<T>* current = maxNode->child;
+
+		/*
 		do
 		{
 			FibonacciHeapNode<T>* next = current->right;
@@ -157,12 +171,36 @@ Node<T> FibonacciHeap<T>::exctractMax()
 			current = next;
 		} 
 		while (current != start);
+		*/
+
+		while (current != start)
+		{
+			FibonacciHeapNode<T>* next = current->right;
+
+			current->parent = nullptr;
+			current->right = minNode->right;
+			current->left = minNode;
+
+			minNode->right->left = current;
+			minNode->right = current;
+
+			if (current->priority > minNode->priority)
+			{
+				minNode = current;
+			}
+			current = next;
+		}
 	}
+
+
 	maxNode->left->right = maxNode->right;
 	maxNode->right->left = maxNode->left;
+
 	Node<T> max;
+
 	max.value = maxNode->value;
 	max.priority = maxNode->priority;
+
 	if (maxNode == maxNode->right)
 	{
 		minNode = nullptr;
@@ -172,14 +210,18 @@ Node<T> FibonacciHeap<T>::exctractMax()
 		minNode = maxNode->right;
 		consolidate();
 	}
+
 	numOfNodes--;
+
 	delete maxNode;
+	maxNode = nullptr;
 	return max;
 }
 
 template <typename T>
 Node<T> FibonacciHeap<T>::findMax()
 {
+	/*
 	if (minNode == nullptr)
 	{
 		return Node<T>(); // Zwraca pusty węzeł, jeśli kopiec jest pusty
@@ -203,7 +245,13 @@ Node<T> FibonacciHeap<T>::findMax()
 	max.priority = maxNode->priority;
 
 	return max;
+	*/
 
+	Node<T> max;
+	max.value = minNode->value;
+	max.priority = minNode->priority;
+
+	return max;
 }
 
 template <typename T>
@@ -272,6 +320,7 @@ void FibonacciHeap<T>::consolidate()
 		}
 
 		arr.assign(maxDegree, nullptr);
+
 		//FibonacciHeapNode<T>* arr[maxDegree] {};
 
 		/*
@@ -400,4 +449,15 @@ int FibonacciHeap<T>::getPriority(int index)
 	return current->priority;
 }
 
+template <typename T>
+void FibonacciHeap<T>::setElement(int index, T value)
+{
+	FibonacciHeapNode<T>* start = minNode;
+	FibonacciHeapNode<T>* current = minNode;
+	for (int i = 0; i < index; i++)
+	{
+		current = current->right;
+	}
+	current->value = value;
+}
 #endif

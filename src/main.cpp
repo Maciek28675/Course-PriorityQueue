@@ -2,10 +2,11 @@
 #include "MaxHeap.hpp"
 #include "HeapPriorityQueue.hpp"
 #include "Utilities.hpp"
+#include "Menu.hpp"
 
 int main()
 {
-	/*
+	
 	measurePerformance(10000, 10000);
 	measurePerformance(10000, 20000);
 	measurePerformance(10000, 30000);
@@ -26,26 +27,32 @@ int main()
 	measurePerformance(10000, 300000);
 	measurePerformance(10000, 400000);
 	measurePerformance(10000, 500000);
+
+	/////////////////////////// TESTS ///////////////////////////////
+
+	/*
+	DataTypeMenu m1;
+	m1.run();
 	*/
+	/*
+	std::vector<int> priorities = generateIntDataSet(100, 1, 0, 500);
+	std::vector<int> elements = generateIntDataSet(100, 2);
+		std::vector<Node<int>> nodes;
 
-	
-	std::vector<Node<int>> data = {
-		{4, 4},
-		{10, 10},
-		{3, 3},
-		{5, 5},
-		{1, 1},
-	};
+	for (int i = 0; i < 100; i++)
+	{
+		nodes.push_back({ elements[i], priorities[i] });
+	}
 
-	HeapPriorityQueue<int> pq(data, data.size());
+	HeapPriorityQueue<int> pq(nodes, nodes.size());
 
 	pq.display();
-	
+	*/
 
-	// #TODO:
-	// - Add method to display heap graphicly
-	// - Add a menu
-	// - Add exception handling
+	// TODO: Add a menu
+	// TODO: Add exception handling
+	// TODO: Fix dangling pointers issue in menu. Consider using unique_ptr
+	// TODO: Fix extract max in fibonnaci heap
 
 	return 0;
 }

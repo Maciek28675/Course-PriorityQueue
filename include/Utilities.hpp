@@ -38,8 +38,8 @@ void measurePerformance(int repetitions, int dataSetSize)
 		nodes.push_back({ elements[i], priorities[i] });
 	}
 
-	HeapPriorityQueue<int> pq(nodes, dataSetSize);
-	HeapPriorityQueue<int> pqCopy(pq);
+	FibonacciHeap<int> pq(nodes, dataSetSize);
+	FibonacciHeap<int> pqCopy(pq);
 
 	double averageTime = 0.0;
 	double sum = 0.0;
@@ -48,9 +48,9 @@ void measurePerformance(int repetitions, int dataSetSize)
 	//int priorityToInsert = pq.getPriority(0);
 	//int elementToInsert = pq.getElement(0);
 
-	int valueToFind = -1;
-	int priorityToSet = pq.getPriority(0) + 1;
-	pq.setElement(dataSetSize - 1, valueToFind);
+	//int valueToFind = -1;
+	//int priorityToSet = pq.getPriority(dataSetSize) - 1;
+	//pq.setElement(0, valueToFind);
 
 	// measure time of operation
 	for (int i = 0; i < repetitions; i++)
@@ -61,14 +61,14 @@ void measurePerformance(int repetitions, int dataSetSize)
 		//pqCopy.insert(elementToInsert, priorityToInsert);
 		//pqCopy.exctractMax();
 		//pqCopy.findMax();
-		//pq.getSize();
-		pq.modifyKey(valueToFind, priorityToSet);
+		pq.getSize();
+		//pq.modifyKey(valueToFind, priorityToSet);
 		timer.stop();
 
 		duration = timer.getDuration();
 		sum += duration;
 
-		pqCopy = pq;
+		//pqCopy = pq;
 	}
 
 	averageTime = sum / repetitions;
