@@ -6,7 +6,7 @@
 
 int main()
 {
-	
+	/*
 	measurePerformance(10000, 10000);
 	measurePerformance(10000, 20000);
 	measurePerformance(10000, 30000);
@@ -27,13 +27,13 @@ int main()
 	measurePerformance(10000, 300000);
 	measurePerformance(10000, 400000);
 	measurePerformance(10000, 500000);
-
+	*/
 	/////////////////////////// TESTS ///////////////////////////////
 
-	/*
+	
 	DataTypeMenu m1;
 	m1.run();
-	*/
+	
 	/*
 	std::vector<int> priorities = generateIntDataSet(100, 1, 0, 500);
 	std::vector<int> elements = generateIntDataSet(100, 2);
@@ -51,8 +51,8 @@ int main()
 
 	// TODO: Add a menu
 	// TODO: Add exception handling
-	// TODO: Fix dangling pointers issue in menu. Consider using unique_ptr
 	// TODO: Fix extract max in fibonnaci heap
+	// TODO: Add a README.md
 
 	return 0;
 }

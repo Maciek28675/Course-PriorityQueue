@@ -28,7 +28,7 @@ template <typename T>
 class QueueMenu : public Menu
 {
 protected:
-	Queue<T>* pq = nullptr;
+	std::unique_ptr<Queue<T>> pq;
 	const int exitOption = 5;
 
 public:
@@ -42,7 +42,7 @@ template <typename T>
 class OperationMenu : public Menu
 {
 protected:
-	Queue<T>* pq = nullptr;
+	std::unique_ptr<Queue<T>> pq;
 	const int exitOption = 7;
 
 public:
@@ -149,16 +149,17 @@ void QueueMenu<T>::run()
 				//HeapPriorityQueue<T> heapPq;
 				//pq = &heapPq;
 				
-				//pq = std::make_unique<HeapPriorityQueue<T>>();
+				pq = std::make_unique<HeapPriorityQueue<T>>();
 				std::cout << "An empty max heap priority queue has been created\n";
 				break;
 			}
 
 			case 2:
 			{
-				FibonacciHeap<T> fibPq;
-				pq = &fibPq;
+				//FibonacciHeap<T> fibPq;
+				//pq = &fibPq;
 
+				pq = std::make_unique<FibonacciHeap<T>>();
 				std::cout << "An empty fibonacci heap priority queue has been created\n";
 				break;
 			}
@@ -181,9 +182,10 @@ void QueueMenu<T>::run()
 					nodes.push_back({ value, priority });
 				}
 
-				HeapPriorityQueue<T> heapPq(nodes, nodes.size());
-				pq = &heapPq;
+				//HeapPriorityQueue<T> heapPq(nodes, nodes.size());
+				//pq = &heapPq;
 
+				pq = std::make_unique<HeapPriorityQueue<T>>(nodes, nodes.size());
 				break;
 			}
 
@@ -205,9 +207,10 @@ void QueueMenu<T>::run()
 					nodes.push_back({ value, priority });
 				}
 
-				FibonacciHeap<T> fibPq(nodes, nodes.size());
-				pq = &fibPq;
+				//FibonacciHeap<T> fibPq(nodes, nodes.size());
+				//pq = &fibPq;
 
+				pq = std::make_unique<FibonacciHeap<T>>(nodes, nodes.size());
 				break;
 			}
 
@@ -233,7 +236,7 @@ void QueueMenu<T>::run()
 		system("cls");
 
 		OperationMenu<T> m1;
-		m1.pq = pq;
+		m1.pq = std::move(pq);
 		m1.run();
 	}
 }
@@ -283,7 +286,10 @@ void OperationMenu<T>::run()
 
 			case 2:
 			{
-				break;
+				Node<T> node = pq->exctractMax();
+
+				std::cout << "max value: " << node.value << '\n';
+				std::cout << "max priority: " << node.priority << '\n';
 			}
 
 			case 3:

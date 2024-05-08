@@ -124,6 +124,9 @@ Node<T> HeapPriorityQueue<T>::exctractMax()
 {
 	Node<T> oldRoot = heap_[0];
 	heap_[0] = heap_[size_ - 1];
+
+	heap_.pop_back();
+	size_--;
 	heapifyDown(0);
 
 	return oldRoot;
