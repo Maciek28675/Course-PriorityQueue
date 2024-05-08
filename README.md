@@ -1,7 +1,7 @@
-# Implementation of priority queue in C++
+# Implementation of a priority queue in C++
 In this project we've implemented priority queue using regular MAX heap and Fibonacci heap.  
 Each structure has it's own set of basic operations like modifyKey, exctractMax, insert, etc.  
-We've measured time of execution of every operation to compare data structures performance and determine which is best for every scenario. We've also verified whether time complexity of those operations matches the theory (and it does for almost all cases).  
+We've measured time of execution of every operation to compare data structures performance and determine which one is best for every scenario. We've also verified whether time complexity of those operations matches the theory (and it does for almost all cases).  
   
 The project follows basic OOP principles, which are encapsulation, polymorphism, inheritance and abstraction.  
   
